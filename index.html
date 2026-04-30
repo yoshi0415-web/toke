@@ -3,20 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <title>秒数表示アプリ</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #111;
+      color: white;
+      height: 100vh;
+    }
+
+    .clock {
+      position: fixed;
+      top: 12px;
+      left: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      background: rgba(255,255,255,0.12);
+      padding: 8px 12px;
+      border-radius: 14px;
+    }
+
+    .app {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 30px;
+    }
+
+    #seconds {
+      font-size: 64px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 14px 24px;
+      margin: 6px;
+      border: none;
+      border-radius: 12px;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>秒数表示アプリ</h1>
+  <div class="clock" id="clock">00:00:00</div>
 
-  <div id="seconds">0秒</div>
+  <div class="app">
+    <h1>秒数表示アプリ</h1>
 
-  <button onclick="startTimer()">開始</button>
-  <button onclick="stopTimer()">停止</button>
-  <button onclick="resetTimer()">リセット</button>
+    <div id="seconds">0秒</div>
+
+    <div>
+      <button onclick="startTimer()">開始</button>
+      <button onclick="stopTimer()">停止</button>
+      <button onclick="resetTimer()">リセット</button>
+    </div>
+  </div>
 
   <script>
     let count = 0;
     let timer = null;
+
+    function updateClock() {
+      const now = new Date();
+
+      const hour = String(now.getHours()).padStart(2, "0");
+      const minute = String(now.getMinutes()).padStart(2, "0");
+      const second = String(now.getSeconds()).padStart(2, "0");
+
+      document.getElementById("clock").textContent =
+        hour + ":" + minute + ":" + second;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
 
     function startTimer() {
       if (timer !== null) return;
@@ -39,7 +107,6 @@
       document.getElementById("seconds").textContent = "0秒";
     }
   </script>
-
 
 </body>
 </html>
