@@ -7,84 +7,93 @@
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
-      background: #111;
-      color: white;
-      height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: white;
+      color: black;
     }
 
-    .clock {
-      position: fixed;
-      top: 12px;
-      left: 16px;
-      font-size: 18px;
-      font-weight: bold;
-      background: rgba(255,255,255,0.12);
-      padding: 8px 12px;
-      border-radius: 14px;
+    .status-bar {
+      height: 56px;
+      padding: 14px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      box-sizing: border-box;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    #fake-time {
+      letter-spacing: 0.5px;
+    }
+
+    .status-icons {
+      font-size: 20px;
+      font-weight: 700;
     }
 
     .app {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      padding: 80px 16px;
     }
 
     h1 {
-      font-size: 26px;
-      margin-bottom: 30px;
+      font-size: 42px;
+      margin: 0 0 50px;
+      font-weight: 800;
     }
 
     #seconds {
-      font-size: 64px;
-      font-weight: bold;
-      margin-bottom: 30px;
+      font-size: 24px;
+      margin-bottom: 10px;
     }
 
     button {
-      font-size: 20px;
-      padding: 14px 24px;
-      margin: 6px;
+      font-size: 16px;
+      padding: 6px 18px;
+      margin-right: 6px;
       border: none;
-      border-radius: 12px;
+      border-radius: 18px;
+      background: #eee;
+      color: black;
+      font-weight: 600;
     }
   </style>
 </head>
+
 <body>
 
-  <div class="clock" id="clock">00:00:00</div>
+  <div class="status-bar">
+    <div id="fake-time">00:00:00</div>
+    <div class="status-icons">▮▮▮ 4G 🔋68</div>
+  </div>
 
   <div class="app">
     <h1>秒数表示アプリ</h1>
 
     <div id="seconds">0秒</div>
 
-    <div>
-      <button onclick="startTimer()">開始</button>
-      <button onclick="stopTimer()">停止</button>
-      <button onclick="resetTimer()">リセット</button>
-    </div>
+    <button onclick="startTimer()">開始</button>
+    <button onclick="stopTimer()">停止</button>
+    <button onclick="resetTimer()">リセット</button>
   </div>
 
   <script>
     let count = 0;
     let timer = null;
 
-    function updateClock() {
+    function updateFakeTime() {
       const now = new Date();
 
       const hour = String(now.getHours()).padStart(2, "0");
       const minute = String(now.getMinutes()).padStart(2, "0");
       const second = String(now.getSeconds()).padStart(2, "0");
 
-      document.getElementById("clock").textContent =
+      document.getElementById("fake-time").textContent =
         hour + ":" + minute + ":" + second;
     }
 
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(updateFakeTime, 1000);
+    updateFakeTime();
 
     function startTimer() {
       if (timer !== null) return;
