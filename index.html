@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>秒数表示アプリ</title>
+  <title>時計</title>
 
   <style>
     body {
@@ -13,96 +13,35 @@
       color: black;
     }
 
-    .fake-ios-clock {
+    .clock {
       position: fixed;
       top: 48px;
       left: 86px;
-      font-size: 32px;
+      font-size: 34px;
       font-weight: 700;
       letter-spacing: -0.5px;
-      z-index: 10;
-    }
-
-    .app {
-      padding: 170px 14px 0;
-    }
-
-    h1 {
-      font-size: 34px;
-      margin: 0 0 44px;
-      font-weight: 800;
-    }
-
-    #seconds {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    button {
-      font-size: 15px;
-      padding: 6px 18px;
-      margin-right: 6px;
-      border: none;
-      border-radius: 18px;
-      background: #eee;
-      color: black;
-      font-weight: 600;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="fake-ios-clock" id="fake-time">21:11:22</div>
-
-  <div class="app">
-    <h1>秒数表示アプリ</h1>
-
-    <div id="seconds">0秒</div>
-
-    <button onclick="startTimer()">開始</button>
-    <button onclick="stopTimer()">停止</button>
-    <button onclick="resetTimer()">リセット</button>
-  </div>
+  <div class="clock" id="time">00:00:00</div>
 
   <script>
-    let count = 0;
-    let timer = null;
-
-    function updateFakeTime() {
+    function updateTime() {
       const now = new Date();
 
-      const hour = String(now.getHours()).padStart(2, "0");
-      const minute = String(now.getMinutes()).padStart(2, "0");
-      const second = String(now.getSeconds()).padStart(2, "0");
+      const h = String(now.getHours()).padStart(2, "0");
+      const m = String(now.getMinutes()).padStart(2, "0");
+      const s = String(now.getSeconds()).padStart(2, "0");
 
-      document.getElementById("fake-time").textContent =
-        hour + ":" + minute + ":" + second;
+      document.getElementById("time").textContent =
+        h + ":" + m + ":" + s;
     }
 
-    setInterval(updateFakeTime, 1000);
-    updateFakeTime();
-
-    function startTimer() {
-      if (timer !== null) return;
-
-      timer = setInterval(function() {
-        count++;
-        document.getElementById("seconds").textContent = count + "秒";
-      }, 1000);
-    }
-
-    function stopTimer() {
-      clearInterval(timer);
-      timer = null;
-    }
-
-    function resetTimer() {
-      clearInterval(timer);
-      timer = null;
-      count = 0;
-      document.getElementById("seconds").textContent = "0秒";
-    }
+    setInterval(updateTime, 1000);
+    updateTime();
   </script>
 
 </body>
